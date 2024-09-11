@@ -1,9 +1,9 @@
 node_modules/
-memes/*
 npm-debug.log*
 .DS_Store
 
-
+*.log
+memes/*
 
 .eslintcache
 *.tsbuildinfo
