@@ -17,7 +17,7 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
       urls.push(m[1]);
     }
 
-     urls.slice(0, 10).map((x, i) => {
+    urls.slice(0, 10).map((x, i) => {
       const imageData = x;
       console.log(imageData, i + 1);
 
