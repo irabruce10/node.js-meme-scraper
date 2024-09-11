@@ -17,8 +17,7 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
       urls.push(m[1]);
     }
 
-    // eslint-disable-next-line array-callback-return
-    urls.slice(0, 10).map((x, i) => {
+     urls.slice(0, 10).map((x, i) => {
       const imageData = x;
       console.log(imageData, i + 1);
 
@@ -31,7 +30,6 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
                 .on('error', reject)
                 .once('close', () => resolve(filepath));
             } else {
-              // Consume response data to free up memory
               res.resume();
               reject(
                 new Error(
@@ -45,36 +43,34 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
       downloadImage(imageData, `memes/0${i + 1}.jpg`)
         .then(console.log)
         .catch(console.error);
-
-      // const content = 'hello!';
-
-      // try {
-      //   if (i >= 9) {
-      //     fs.writeFileSync(`memes/${i + 1}.jpg`, content);
-      //   } else {
-      //     fs.writeFileSync(`memes/0${i + 1}.jpg`, content);
-      //   }
-
-      //   // file written successfully
-      // } catch (err) {
-      //   console.error(err);
-      // }
-
-      // imageData.forEach((el) => {
-      //   const content = 'hello!';
-      //   const p = el;
-
-      //   try {
-      //     fs.writeFileSync(`memes/${p.length}.jpg`, content);
-      //     // file written successfully
-      //   } catch (err) {
-      //     console.error(err);
-      //   }
-      // });
     });
-
-    // console.log(data);
   })
   .catch((error) => {
     console.error(error);
   });
+
+// const content = 'hello!';
+
+// try {
+//   if (i >= 9) {
+//     fs.writeFileSync(`memes/${i + 1}.jpg`, content);
+//   } else {
+//     fs.writeFileSync(`memes/0${i + 1}.jpg`, content);
+//   }
+
+//   // file written successfully
+// } catch (err) {
+//   console.error(err);
+// }
+
+// imageData.forEach((el) => {
+//   const content = 'hello!';
+//   const p = el;
+
+//   try {
+//     fs.writeFileSync(`memes/${p.length}.jpg`, content);
+//     // file written successfully
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
