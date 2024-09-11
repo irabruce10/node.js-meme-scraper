@@ -2,19 +2,14 @@ import fetch from 'node-fetch';
 
 import fs from 'node:fs';
 
-// eslint-disable-next-line import-x/no-unresolved
 import client from 'node:https';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-
-const getData = await fetch(
-  'https://memegen-link-examples-upleveled.netlify.app/',
-)
+await fetch('https://memegen-link-examples-upleveled.netlify.app/')
   .then((response) => response.text())
   .then((data) => {
-    let m,
-      urls = [],
-      str = data;
+    let m;
+    const urls = [];
+    const str = data;
 
     const rex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
 
@@ -22,6 +17,7 @@ const getData = await fetch(
       urls.push(m[1]);
     }
 
+    // eslint-disable-next-line array-callback-return
     urls.slice(0, 10).map((x, i) => {
       const imageData = x;
       console.log(imageData, i + 1);
