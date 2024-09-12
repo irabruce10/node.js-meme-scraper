@@ -24,6 +24,16 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
       console.log(url);
       const content = url;
 
+      const folderExists = fs.existsSync('memes');
+      console.log(folderExists);
+
+      if (folderExists) {
+        console.log('memes folder already exists');
+      } else {
+        fs.mkdirSync('memes');
+        console.log('memes folder created');
+      }
+
       if (i >= 9) {
         fs.writeFileSync(`memes/${i + 1}.jpg`, content);
       } else {
