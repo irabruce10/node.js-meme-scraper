@@ -4,7 +4,7 @@ import fs from 'node:fs';
 
 import client from 'node:https';
 
-await fetch('https://memegen-link-examples-upleveled.netlify.app/')
+fetch('https://memegen-link-examples-upleveled.netlify.app/')
   .then((response) => response.text())
   .then((data) => {
     let m;
