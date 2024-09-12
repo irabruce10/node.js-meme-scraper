@@ -31,7 +31,7 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
       }
     });
 
-    // loop the 10url
+    // loop the 10 url
     // and download the images to the 'memes' directory, naming them sequentially from 1 to 10.
 
     // urls.slice(0, 10).forEach(function (x, i) {
