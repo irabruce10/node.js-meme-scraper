@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 import fs from 'node:fs';
 
-// import client from 'node:https';
+import client from 'node:https';
 
 await fetch('https://memegen-link-examples-upleveled.netlify.app/')
   .then((response) => response.text())
@@ -34,10 +34,41 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
         console.log('memes folder created');
       }
 
+      // if (i >= 9) {
+      //   fs.writeFileSync(`memes/${i + 1}.jpg`, content);
+      // } else {
+      //   fs.writeFileSync(`memes/0${i + 1}.jpg`, content);
+      // }
+
+      function downloadImage(image, filepath) {
+        return new Promise((resolve, reject) => {
+          client.get(image, (res) => {
+            if (res.statusCode === 200) {
+              res
+                .pipe(fs.createWriteStream(filepath))
+                .on('error', reject)
+                .once('close', () => resolve(filepath));
+            } else {
+              res.resume();
+              reject(
+                new Error(
+                  `Request Failed With a Status Code: ${res.statusCode}`,
+                ),
+              );
+            }
+          });
+        });
+      }
+
       if (i >= 9) {
-        fs.writeFileSync(`memes/${i + 1}.jpg`, content);
+        downloadImage(content, `memes/${i + 1}.jpg`)
+          .then(console.log)
+          .catch(console.error);
       } else {
-        fs.writeFileSync(`memes/0${i + 1}.jpg`, content);
+        console.log('Downloading ');
+        downloadImage(content, `memes/0${i + 1}.jpg`)
+          .then(console.log)
+          .catch(console.error);
       }
     });
 
