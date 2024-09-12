@@ -4,12 +4,17 @@ import fs from 'node:fs';
 
 import client from 'node:https';
 
+// fetching Data from URL
+
 await fetch('https://memegen-link-examples-upleveled.netlify.app/')
   .then((response) => response.text())
+
   .then((data) => {
     let m;
     const urls = [];
     const str = data;
+
+    // Regular expression to extract image URLs from HTML content
 
     const rex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
 
@@ -17,8 +22,12 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
       urls.push(m[1]);
     }
 
+    // Limit the array of urls to the first 10
+
     const imageUrlData = urls.slice(0, 10);
     console.log(imageUrlData);
+
+    // Loop over each of the first 10 URLs in the array
 
     imageUrlData.forEach((url, i) => {
       console.log(url);
@@ -33,6 +42,7 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
         fs.mkdirSync('memes');
         console.log('memes folder created');
       }
+      // Put the image data inside of the file and save it
 
       function downloadImage(image, filepath) {
         return new Promise((resolve, reject) => {
@@ -54,6 +64,8 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
         });
       }
 
+      // file name with the leading zero
+
       if (i >= 9) {
         downloadImage(content, `memes/${i + 1}.jpg`)
           .then(console.log)
@@ -65,72 +77,7 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
           .catch(console.error);
       }
     });
-
-    // loop the 10 url
-    // and download the images to the 'memes' directory, naming them sequentially from 1 to 10.
-
-    // urls.slice(0, 10).forEach(function (x, i) {
-    //   const imageData = x;
-    //   console.log(imageData, i + 1);
-
-    //   function downloadImage(url, filepath) {
-    //     return new Promise((resolve, reject) => {
-    //       client.get(url, (res) => {
-    //         if (res.statusCode === 200) {
-    //           res
-    //             .pipe(fs.createWriteStream(filepath))
-    //             .on('error', reject)
-    //             .once('close', () => resolve(filepath));
-    //         } else {
-    //           res.resume();
-    //           reject(
-    //             new Error(
-    //               `Request Failed With a Status Code: ${res.statusCode}`,
-    //             ),
-    //           );
-    //         }
-    //       });
-    //     });
-    //   }
-
-    //   if (i >= 9) {
-    //     downloadImage(imageData, `memes/${i + 1}.jpg`)
-    //       .then(console.log)
-    //       .catch(console.error);
-    //   } else {
-    //     console.log('Downloading ');
-    //     downloadImage(imageData, `memes/0${i + 1}.jpg`)
-    //       .then(console.log)
-    //       .catch(console.error);
-    //   }
-    // });
   })
   .catch((error) => {
     console.error(error);
   });
-
-// const content = 'hello!';
-
-// try {
-//   if (i >= 9) {
-//     fs.writeFileSync(`memes/${i + 1}.jpg`, content);
-//   } else {
-//     fs.writeFileSync(`memes/0${i + 1}.jpg`, content);
-//   }
-
-//   // file written successfully
-// } catch (err) {
-//   console.error(err);
-// }
-
-// imageData.forEach((el) => {
-//   const content = 'hello!';
-//   const p = el;
-
-//   try {
-//     fs.writeFileSync(`memes/${p.length}.jpg`, content);
-//     // file written successfully
-//   } catch (err) {
-//     console.error(err);
-//   }
-// });
