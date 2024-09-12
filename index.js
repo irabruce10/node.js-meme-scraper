@@ -40,9 +40,17 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
           });
         });
       }
-      downloadImage(imageData, `memes/0${i + 1}.jpg`)
-        .then(console.log)
-        .catch(console.error);
+
+      if (i >= 9) {
+        downloadImage(imageData, `memes/${i + 1}.jpg`)
+          .then(console.log)
+          .catch(console.error);
+      } else {
+        console.log('Downloading ');
+        downloadImage(imageData, `memes/0${i + 1}.jpg`)
+          .then(console.log)
+          .catch(console.error);
+      }
     });
   })
   .catch((error) => {
