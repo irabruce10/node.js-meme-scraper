@@ -1,46 +1,42 @@
-import fetch from 'node-fetch';
-
 import fs from 'node:fs';
 
 import client from 'node:https';
 
 // fetching Data from URL
 
-await fetch('https://memegen-link-examples-upleveled.netlify.app/')
+fetch('https://memegen-link-examples-upleveled.netlify.app/')
   .then((response) => response.text())
 
   .then((data) => {
-    let m;
+    let regex;
     const urls = [];
     const str = data;
 
-    // Regular expression to extract image URLs from HTML content
+    // Regular expression to extract iregexage URLs from HTML content
 
-    const rex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
+    const imageSrcRegex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/g;
 
-    while ((m = rex.exec(str))) {
-      urls.push(m[1]);
+    while ((regex = imageSrcRegex.exec(str))) {
+      urls.push(regex[1]);
     }
 
     // Limit the array of urls to the first 10
 
     const imageUrlData = urls.slice(0, 10);
-    console.log(imageUrlData);
 
     // Loop over each of the first 10 URLs in the array
 
     imageUrlData.forEach((url, i) => {
-      console.log(url);
       const content = url;
 
       const folderExists = fs.existsSync('memes');
-      console.log(folderExists);
+
+      // Create a 'memes' folder if it doesn't exist
 
       if (folderExists) {
-        console.log('memes folder already exists');
+        alert('memes folder already exists');
       } else {
         fs.mkdirSync('memes');
-        console.log('memes folder created');
       }
       // Put the image data inside of the file and save it
 
@@ -71,7 +67,6 @@ await fetch('https://memegen-link-examples-upleveled.netlify.app/')
           .then(console.log)
           .catch(console.error);
       } else {
-        console.log('Downloading ');
         downloadImage(content, `memes/0${i + 1}.jpg`)
           .then(console.log)
           .catch(console.error);
